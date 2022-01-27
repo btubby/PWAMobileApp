@@ -4,13 +4,16 @@
       <app-title class="px-4"></app-title>
 
       <transition name="slide-fade">
-        <appAlert v-if="showError" :msg="errorMsg" @click="showError = false"></appAlert>
+        <appAlert
+          v-if="showError"
+          :msg="errorMsg"
+          @click="showError = false"
+        ></appAlert>
       </transition>
 
-      <h4
-        v-if="!showError"
-        class="description text-grey-light px-4"
-      >Scan a barcode to get nutritional food value</h4>
+      <h4 v-if="!showError" class="description text-grey-light px-4">
+        Scan a barcode to get nutritional food value
+      </h4>
 
       <input
         class="relative z-50 hidden"
@@ -18,39 +21,49 @@
         accept="image/*"
         id="image-picker"
         ref="image-picker"
-      >
+      />
       <span class="flex justify-center">
         <button
           v-if="isLoading === 'false'"
           class="btn-camera bg-blue hover:bg-blue-light text-white font-bold py-2 px-4 border-b-4 border-blue-dark hover:border-blue rounded z-50"
           @click="capture($event)"
         >
-          <img src="../static/camera.svg" alt="camera-icon" width="25px">
+          <img src="../static/camera.svg" alt="camera-icon" width="25px" />
         </button>
         <button
           v-if="isLoading === 'loading'"
           class="btn-camera bg-grey hover:bg-grey-light text-white font-bold py-2 px-4 border-b-4 border-grey-dark hover:border-grey rounded z-50"
-        >. . .</button>
+        >
+          . . .
+        </button>
         <button
           v-if="isLoading === 'done'"
           class="btn-camera bg-green hover:bg-green-light text-white font-bold py-2 px-4 border-b-4 border-green-dark hover:green-blue rounded z-50"
         >
-          <img src="../static/done.svg" alt="camera-icon" width="25px">
+          <img src="../static/done.svg" alt="camera-icon" width="25px" />
         </button>
       </span>
 
       <div class="camera-wrapper" ref="camera">
-        <video id="player" ref="player" autoplay :class="{'hidden': isSnapshot}"></video>
+        <video
+          id="player"
+          ref="player"
+          autoplay
+          :class="{ hidden: isSnapshot }"
+        ></video>
         <canvas
           id="canvas"
           ref="canvas"
-          :class="{'hidden': !isSnapshot, 'snapshot': isSnapshotTaken}"
+          :class="{ hidden: !isSnapshot, snapshot: isSnapshotTaken }"
         ></canvas>
       </div>
     </section>
     <app-error
       v-show="!isCameraActive"
-      @activate-camera="isCameraActive = true; initializeMedia($refs.player)"
+      @activate-camera="
+        isCameraActive = true;
+        initializeMedia($refs.player);
+      "
     ></app-error>
   </main>
 </template>
@@ -61,7 +74,7 @@ import { MEDIA } from "../mixins/Media";
 import Alert from "@/components/Alert.vue";
 import Title from "@/components/Title.vue";
 import Error from "@/components/Error.vue";
-import { setInterval } from "timers";
+// import { setInterval } from "timers";
 
 export default {
   components: {
